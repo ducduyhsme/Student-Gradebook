@@ -1,5 +1,16 @@
-# Student Gradebook CLI - Python Requirements
-# This application uses only Python standard library modules
-# No external dependencies required
+# Student Gradebook - Python Requirements
+
+# GUI Application Requirements
+# Tkinter is part of the Python standard library but may need separate installation:
+# - Ubuntu/Debian: sudo apt-get install python3-tk
+# - Fedora: sudo dnf install python3-tkinter
+# - macOS/Windows: Usually pre-installed with Python
+
+# No external dependencies required for basic functionality
+# All other modules used are part of Python standard library:
+# - json: Data persistence
+# - os: File operations
+# - sys: System operations
+# - tkinter: GUI framework
 
 # Minimum Python version: 3.6+

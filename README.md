@@ -1,9 +1,19 @@
-# Student-Gradebook-CLI
+# Student-Gradebook
 
-A Python-based command-line application for managing a student gradebook with support for data persistence, GPA calculation, and comprehensive input validation.
+A Python-based application for managing a student gradebook with both CLI and GUI interfaces, featuring data persistence, GPA calculation, and comprehensive input validation.
 
 ## Features
 
+### GUI Application (New!)
+- **Sortable Course Table**: Click column headers to sort by course name, grade, or credits
+- **Search/Filter**: Real-time search to filter courses by name
+- **Add/Edit Courses**: User-friendly popup dialogs for adding and editing courses
+- **Delete Courses**: Delete courses with confirmation dialog
+- **GPA Summary**: Live display of total credits and weighted GPA
+- **Input Validation**: User-friendly error dialogs for invalid inputs
+- **Persistent Storage**: Automatic save/load using `gradebook.json`
+
+### CLI Application (Legacy)
 - **Add Courses**: Add new courses with grades and credit hours
 - **Update Courses**: Modify grades or credit hours for existing courses
 - **Delete Courses**: Remove courses from the gradebook
@@ -15,6 +25,7 @@ A Python-based command-line application for managing a student gradebook with su
 ## Requirements
 
 - Python 3.6 or higher
+- tkinter (python3-tk) - for GUI application
 
 ## Installation
 
@@ -24,14 +35,70 @@ git clone https://github.com/ducduyhsme/Student-Gradebook-CLI.git
 cd Student-Gradebook-CLI
 ```
 
-2. Make the script executable (optional):
+2. Install tkinter (if not already installed):
 ```bash
-chmod +x gradebook.py
+# On Ubuntu/Debian
+sudo apt-get install python3-tk
+
+# On Fedora
+sudo dnf install python3-tkinter
+
+# On macOS (usually pre-installed)
+# No action needed
+
+# On Windows (usually pre-installed)
+# No action needed
+```
+
+3. Make scripts executable (optional):
+```bash
+chmod +x gradebook.py gradebook_gui.py
 ```
 
 ## Usage
 
-Run the application:
+### GUI Application (Recommended)
+
+Run the graphical interface:
+```bash
+python3 gradebook_gui.py
+```
+
+Or if you made it executable:
+```bash
+./gradebook_gui.py
+```
+
+#### GUI Features
+
+**Main Window:**
+- View all courses in a sortable table
+- Click column headers (Course Name, Grade, Credits) to sort
+- See live GPA and total credits at the bottom
+
+**Search/Filter:**
+- Type in the search box to filter courses by name
+- Results update in real-time
+
+**Adding a Course:**
+1. Click "Add Course" button or use File → Add Course menu
+2. Enter course name, grade (0.0-4.0 or letter A-F), and credit hours
+3. Click OK to save
+
+**Editing a Course:**
+1. Select a course from the table
+2. Click "Edit Course" button or double-click the course
+3. Modify grade or credits
+4. Click OK to save
+
+**Deleting a Course:**
+1. Select a course from the table
+2. Click "Delete Course" button
+3. Confirm deletion in the dialog
+
+### CLI Application (Legacy)
+
+Run the command-line interface:
 ```bash
 python3 gradebook.py
 ```
@@ -79,9 +146,11 @@ The application accepts two grade formats:
 
 ### Data Storage
 
-- All data is automatically saved to `gradebook_data.json`
+- **GUI Application**: Data is automatically saved to `gradebook.json`
+- **CLI Application**: Data is automatically saved to `gradebook_data.json`
 - Data persists between sessions
 - JSON format for easy backup and transfer
+- Both applications can coexist with separate data files
 
 ## Example Session
 
@@ -141,6 +210,25 @@ The gradebook uses a dictionary to store courses:
   }
 }
 ```
+
+## GUI Screenshots
+
+### Main Window
+![Main Window](https://github.com/user-attachments/assets/05fe3c58-976d-4ca9-8103-1235c41dff20)
+
+### Sorted View
+![Sorted View](https://github.com/user-attachments/assets/f65b27a2-0ece-4a05-8720-19dff0c95e5d)
+
+### Filtered Search
+![Filtered Search](https://github.com/user-attachments/assets/649fe854-40ed-4d69-ad5f-4356d82bea92)
+
+## Architecture
+
+The application uses a modular design:
+- `Gradebook` class: Core business logic for managing courses and GPA calculation
+- `GradebookGUI` class: Tkinter-based graphical user interface
+- `CourseDialog` class: Popup dialogs for adding/editing courses
+- Persistent storage: JSON-based data persistence
 
 ## License
 

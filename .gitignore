@@ -1,5 +1,6 @@
 # Gradebook data files
 gradebook_data.json
+gradebook.json
 
 # Python cache
 __pycache__/
