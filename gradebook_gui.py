@@ -169,37 +169,61 @@ class CourseDialog(tk.Toplevel):
         self.transient(parent)
         self.grab_set()
         
+        # Configure dialog background
+        self.configure(bg='#f3f4f6')
+        
         # Center the dialog
-        self.geometry("400x250")
+        self.geometry("450x280")
         
-        # Create form fields
-        tk.Label(self, text="Course Name:").grid(row=0, column=0, sticky='w', padx=10, pady=10)
-        self.course_name_entry = tk.Entry(self, width=30)
-        self.course_name_entry.grid(row=0, column=1, padx=10, pady=10)
+        # Create main frame with padding
+        main_frame = tk.Frame(self, bg='#f3f4f6')
+        main_frame.pack(fill='both', expand=True, padx=20, pady=20)
         
-        tk.Label(self, text="Grade (0.0-4.0 or A-F):").grid(row=1, column=0, sticky='w', padx=10, pady=10)
-        self.grade_entry = tk.Entry(self, width=30)
-        self.grade_entry.grid(row=1, column=1, padx=10, pady=10)
+        # Create form fields with modern styling
+        tk.Label(main_frame, text="Course Name:", font=('Arial', 10, 'bold'), 
+                bg='#f3f4f6', fg='#1f2937').grid(row=0, column=0, sticky='w', padx=10, pady=12)
+        self.course_name_entry = tk.Entry(main_frame, width=30, font=('Arial', 10),
+                                          relief='solid', borderwidth=1)
+        self.course_name_entry.grid(row=0, column=1, padx=10, pady=12)
         
-        tk.Label(self, text="Credit Hours:").grid(row=2, column=0, sticky='w', padx=10, pady=10)
-        self.credits_entry = tk.Entry(self, width=30)
-        self.credits_entry.grid(row=2, column=1, padx=10, pady=10)
+        tk.Label(main_frame, text="Grade (0.0-4.0 or A-F):", font=('Arial', 10, 'bold'),
+                bg='#f3f4f6', fg='#1f2937').grid(row=1, column=0, sticky='w', padx=10, pady=12)
+        self.grade_entry = tk.Entry(main_frame, width=30, font=('Arial', 10),
+                                    relief='solid', borderwidth=1)
+        self.grade_entry.grid(row=1, column=1, padx=10, pady=12)
+        
+        tk.Label(main_frame, text="Credit Hours:", font=('Arial', 10, 'bold'),
+                bg='#f3f4f6', fg='#1f2937').grid(row=2, column=0, sticky='w', padx=10, pady=12)
+        self.credits_entry = tk.Entry(main_frame, width=30, font=('Arial', 10),
+                                      relief='solid', borderwidth=1)
+        self.credits_entry.grid(row=2, column=1, padx=10, pady=12)
         
         # Pre-fill if editing
         if course_name:
             self.course_name_entry.insert(0, course_name)
-            self.course_name_entry.config(state='readonly')
+            self.course_name_entry.config(state='readonly', bg='#e5e7eb')
         if grade is not None:
             self.grade_entry.insert(0, str(grade))
         if credits is not None:
             self.credits_entry.insert(0, str(credits))
         
-        # Buttons
-        button_frame = tk.Frame(self)
+        # Buttons with modern styling
+        button_frame = tk.Frame(main_frame, bg='#f3f4f6')
         button_frame.grid(row=3, column=0, columnspan=2, pady=20)
         
-        tk.Button(button_frame, text="OK", command=self.ok_clicked, width=10).pack(side='left', padx=5)
-        tk.Button(button_frame, text="Cancel", command=self.cancel_clicked, width=10).pack(side='left', padx=5)
+        ok_button = tk.Button(button_frame, text="OK", command=self.ok_clicked, 
+                             width=12, font=('Arial', 10, 'bold'),
+                             bg='#2563eb', fg='white', relief='flat',
+                             activebackground='#1d4ed8', activeforeground='white',
+                             cursor='hand2', pady=8)
+        ok_button.pack(side='left', padx=5)
+        
+        cancel_button = tk.Button(button_frame, text="Cancel", command=self.cancel_clicked, 
+                                 width=12, font=('Arial', 10, 'bold'),
+                                 bg='#6b7280', fg='white', relief='flat',
+                                 activebackground='#4b5563', activeforeground='white',
+                                 cursor='hand2', pady=8)
+        cancel_button.pack(side='left', padx=5)
         
         # Focus on first field
         if not course_name:
@@ -246,6 +270,22 @@ class GradebookGUI:
         self.root.title("Student Gradebook")
         self.root.geometry("900x600")
         
+        # Configure modern color scheme
+        self.colors = {
+            'primary': '#2563eb',      # Modern blue
+            'primary_hover': '#1d4ed8',
+            'secondary': '#f3f4f6',    # Light gray
+            'accent': '#10b981',       # Green
+            'danger': '#ef4444',       # Red
+            'text': '#1f2937',         # Dark gray
+            'text_light': '#6b7280',   # Medium gray
+            'background': '#ffffff',
+            'border': '#e5e7eb'
+        }
+        
+        # Configure root background
+        self.root.configure(bg=self.colors['secondary'])
+        
         # Initialize gradebook
         self.gradebook = Gradebook()
         
@@ -257,6 +297,9 @@ class GradebookGUI:
         self.sort_column = None
         self.sort_reverse = False
         
+        # Configure styles
+        self.configure_styles()
+        
         # Create GUI components
         self.create_menu()
         self.create_toolbar()
@@ -266,6 +309,33 @@ class GradebookGUI:
         # Load initial data
         self.refresh_table()
         self.update_summary()
+    
+    def configure_styles(self):
+        """Configure ttk styles for modern appearance"""
+        style = ttk.Style()
+        
+        # Configure Treeview style with bigger header font
+        style.configure("Treeview.Heading",
+                       font=('Arial', 12, 'bold'),
+                       background=self.colors['primary'],
+                       foreground='white',
+                       relief='flat',
+                       padding=10)
+        
+        style.map("Treeview.Heading",
+                 background=[('active', self.colors['primary_hover'])])
+        
+        # Configure Treeview style
+        style.configure("Treeview",
+                       font=('Arial', 10),
+                       rowheight=30,
+                       background='white',
+                       fieldbackground='white',
+                       borderwidth=1)
+        
+        style.map('Treeview',
+                 background=[('selected', self.colors['primary'])],
+                 foreground=[('selected', 'white')])
     
     def create_menu(self):
         """Create menu bar"""
@@ -292,25 +362,74 @@ class GradebookGUI:
     
     def create_toolbar(self):
         """Create toolbar with search and action buttons"""
-        toolbar = tk.Frame(self.root, relief='raised', borderwidth=1)
-        toolbar.pack(side='top', fill='x', padx=5, pady=5)
+        toolbar = tk.Frame(self.root, bg=self.colors['background'], relief='flat', borderwidth=0)
+        toolbar.pack(side='top', fill='x', padx=10, pady=10)
         
         # Search section
-        tk.Label(toolbar, text="Search:").pack(side='left', padx=5)
-        search_entry = tk.Entry(toolbar, textvariable=self.search_var, width=30)
+        search_frame = tk.Frame(toolbar, bg=self.colors['background'])
+        search_frame.pack(side='left', padx=5)
+        
+        tk.Label(search_frame, text="Search:", font=('Arial', 10), bg=self.colors['background']).pack(side='left', padx=5)
+        search_entry = tk.Entry(search_frame, textvariable=self.search_var, width=30, 
+                               font=('Arial', 10), relief='solid', borderwidth=1)
         search_entry.pack(side='left', padx=5)
         
-        # Action buttons
-        tk.Button(toolbar, text="Add Course", command=self.add_course).pack(side='left', padx=5)
-        tk.Button(toolbar, text="Edit Course", command=self.edit_course).pack(side='left', padx=5)
-        tk.Button(toolbar, text="Delete Course", command=self.delete_course).pack(side='left', padx=5)
-        tk.Button(toolbar, text="Refresh", command=self.refresh_table).pack(side='left', padx=5)
+        # Action buttons with modern styling
+        button_frame = tk.Frame(toolbar, bg=self.colors['background'])
+        button_frame.pack(side='left', padx=20)
+        
+        self.create_modern_button(button_frame, "➕ Add Course", self.add_course, self.colors['primary']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "✏️ Edit Course", self.edit_course, self.colors['accent']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "🗑️ Delete Course", self.delete_course, self.colors['danger']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "🔄 Refresh", self.refresh_table, self.colors['text_light']).pack(side='left', padx=3)
+    
+    def create_modern_button(self, parent, text, command, bg_color):
+        """Create a modern styled button with hover effect"""
+        button = tk.Button(parent, text=text, command=command,
+                          font=('Arial', 10, 'bold'),
+                          bg=bg_color,
+                          fg='white',
+                          activebackground=bg_color,
+                          activeforeground='white',
+                          relief='flat',
+                          borderwidth=0,
+                          padx=15,
+                          pady=8,
+                          cursor='hand2')
+        
+        # Add hover effects
+        def on_enter(e):
+            button['bg'] = self.adjust_color_brightness(bg_color, -20)
+        
+        def on_leave(e):
+            button['bg'] = bg_color
+        
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
+        
+        return button
+    
+    def adjust_color_brightness(self, hex_color, amount):
+        """Adjust the brightness of a hex color"""
+        # Remove '#' if present
+        hex_color = hex_color.lstrip('#')
+        
+        # Convert to RGB
+        r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
+        
+        # Adjust brightness
+        r = max(0, min(255, r + amount))
+        g = max(0, min(255, g + amount))
+        b = max(0, min(255, b + amount))
+        
+        # Convert back to hex
+        return f'#{r:02x}{g:02x}{b:02x}'
     
     def create_course_table(self):
         """Create the course table with sortable columns"""
-        # Frame for table
-        table_frame = tk.Frame(self.root)
-        table_frame.pack(side='top', fill='both', expand=True, padx=5, pady=5)
+        # Frame for table with modern styling
+        table_frame = tk.Frame(self.root, bg=self.colors['background'])
+        table_frame.pack(side='top', fill='both', expand=True, padx=10, pady=5)
         
         # Create Treeview
         columns = ('course_name', 'grade', 'credits')
@@ -339,15 +458,27 @@ class GradebookGUI:
     
     def create_summary_panel(self):
         """Create summary panel showing GPA and credits"""
-        summary_frame = tk.Frame(self.root, relief='sunken', borderwidth=2)
-        summary_frame.pack(side='bottom', fill='x', padx=5, pady=5)
+        summary_frame = tk.Frame(self.root, bg=self.colors['primary'], relief='flat', borderwidth=0)
+        summary_frame.pack(side='bottom', fill='x', padx=10, pady=10)
         
-        # Create labels
-        self.total_credits_label = tk.Label(summary_frame, text="Total Credits: 0", font=('Arial', 12, 'bold'))
-        self.total_credits_label.pack(side='left', padx=20, pady=10)
+        # Add padding inside the frame
+        inner_frame = tk.Frame(summary_frame, bg=self.colors['primary'])
+        inner_frame.pack(fill='x', padx=20, pady=15)
         
-        self.gpa_label = tk.Label(summary_frame, text="GPA: 0.00", font=('Arial', 12, 'bold'))
-        self.gpa_label.pack(side='left', padx=20, pady=10)
+        # Create labels with modern styling
+        self.total_credits_label = tk.Label(inner_frame, 
+                                           text="Total Credits: 0", 
+                                           font=('Arial', 14, 'bold'),
+                                           bg=self.colors['primary'],
+                                           fg='white')
+        self.total_credits_label.pack(side='left', padx=30)
+        
+        self.gpa_label = tk.Label(inner_frame, 
+                                 text="GPA: 0.00", 
+                                 font=('Arial', 14, 'bold'),
+                                 bg=self.colors['primary'],
+                                 fg='white')
+        self.gpa_label.pack(side='left', padx=30)
     
     def refresh_table(self):
         """Refresh the course table"""
