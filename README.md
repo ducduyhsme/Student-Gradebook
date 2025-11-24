@@ -152,7 +152,7 @@ The application accepts two grade formats:
 - JSON format for easy backup and transfer
 - Both applications can coexist with separate data files
 
-## Example Session
+## Example Session (CLI)
 
 ```
 Welcome to Student Gradebook CLI!
