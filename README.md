@@ -211,17 +211,6 @@ The gradebook uses a dictionary to store courses:
 }
 ```
 
-## GUI Screenshots
-
-### Main Window
-![Main Window](https://github.com/user-attachments/assets/05fe3c58-976d-4ca9-8103-1235c41dff20)
-
-### Sorted View
-![Sorted View](https://github.com/user-attachments/assets/f65b27a2-0ece-4a05-8720-19dff0c95e5d)
-
-### Filtered Search
-![Filtered Search](https://github.com/user-attachments/assets/649fe854-40ed-4d69-ad5f-4356d82bea92)
-
 ## Architecture
 
 The application uses a modular design:
