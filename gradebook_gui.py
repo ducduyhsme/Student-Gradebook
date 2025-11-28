@@ -349,7 +349,6 @@ class GradebookGUI:
         self.configure_styles()
         
         # Build the GUI components
-        self.create_menu()          # Menu bar at top
         self.create_toolbar()       # Search and action buttons
         self.create_course_table()  # Main table displaying courses
         self.create_summary_panel() # GPA summary at bottom
@@ -386,29 +385,6 @@ class GradebookGUI:
         style.map('Treeview',
                  background=[('selected', self.colors['primary'])],
                  foreground=[('selected', 'white')])
-    
-    def create_menu(self):
-        """Create menu bar"""
-        menubar = tk.Menu(self.root)
-        self.root.config(menu=menubar)
-        
-        # File menu with basic operations
-        file_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="Add Course", command=self.add_course)
-        file_menu.add_separator()  # Visual separator
-        file_menu.add_command(label="Exit", command=self.root.quit)
-        
-        # Edit menu for course modifications
-        edit_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Edit", menu=edit_menu)
-        edit_menu.add_command(label="Edit Course", command=self.edit_course)
-        edit_menu.add_command(label="Delete Course", command=self.delete_course)
-        
-        # Help menu for information
-        help_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Help", menu=help_menu)
-        help_menu.add_command(label="About", command=self.show_about)
     
     def create_toolbar(self):
         """Create toolbar with search and action buttons"""
@@ -715,27 +691,6 @@ class GradebookGUI:
             else:
                 messagebox.showerror("Error", message)
     
-    def show_about(self):
-        """Show about dialog"""
-        # Multi-line text with application information
-        about_text = """Student Gradebook GUI
-Version 2.0
-
-A graphical application for managing student courses and calculating GPA.
-
-Features:
-• Sortable course table
-• Search and filter courses
-• Add, edit, and delete courses
-• GPA calculation
-• Persistent storage
-
-Developed with Python and Tkinter"""
-        
-        # Display information dialog
-        messagebox.showinfo("About", about_text)
-
-
 def main():
     """Main entry point"""
     # Create the root Tkinter window
