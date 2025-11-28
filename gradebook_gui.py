@@ -407,10 +407,10 @@ class GradebookGUI:
         
         # Create action buttons with emoji icons and color coding
         # Blue for add, green for edit, red for delete, gray for refresh
-        self.create_modern_button(button_frame, "➕ Add Course", self.add_course, self.colors['primary']).pack(side='left', padx=3)
-        self.create_modern_button(button_frame, "✏️ Edit Course", self.edit_course, self.colors['accent']).pack(side='left', padx=3)
-        self.create_modern_button(button_frame, "🗑️ Delete Course", self.delete_course, self.colors['danger']).pack(side='left', padx=3)
-        self.create_modern_button(button_frame, "🔄 Refresh", self.refresh_table, self.colors['text_light']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "Add Course", self.add_course, self.colors['primary']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "Edit Course", self.edit_course, self.colors['accent']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "Delete Course", self.delete_course, self.colors['danger']).pack(side='left', padx=3)
+        self.create_modern_button(button_frame, "Refresh", self.refresh_table, self.colors['text_light']).pack(side='left', padx=3)
     
     def create_modern_button(self, parent, text, command, bg_color):
         """Create a modern styled button with hover effect"""
